@@ -6,7 +6,7 @@
         alt="Vuetify.js"
         class="mb-5"
         height="200px"
-        width="200px"
+        width="180px"
       >
       <blockquote class="blockquote">
         Chargebee is the subscription billing and revenue 

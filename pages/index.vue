@@ -1,28 +1,77 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-flex lg3 sm6 xs12>
-      <card 
-        icon="mdi-bookmark-check"
-        title="134"
-        sub-title="Matches"
-        color="green">
-      </card>
-    </v-flex>
-    <v-flex lg3 sm6 xs12>
-      <card 
-        icon="mdi-bookmark-remove"
-        title="7"
-        sub-title="Mismatches"
-        color="red">
-      </card>
-    </v-flex>
-  </v-row>
+  <v-app>
+    <div justify="center" align="center" style="display:flex;">
+      <v-flex lg3 sm6 xs12>
+        <card 
+          icon="mdi-bookmark-check"
+          title="134"
+          sub-title="Matches"
+          color="green">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card 
+          icon="mdi-bookmark-remove"
+          title="7"
+          sub-title="Mismatches"
+          color="red">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card 
+          icon="mdi-exclamation"
+          title="94%"
+          sub-title="Percent of matches"
+          color="purple">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card 
+          icon="mdi-account"
+          title="123456789"
+          sub-title="Customer Id"
+          color="orange">
+        </card>
+      </v-flex>
+    </div>
+    <div style="display:flex;">
+      <datepicker
+        when="From Date"
+        style="padding-top:34px">
+      </datepicker>
+      &nbsp;
+      &nbsp;
+      <datepicker
+        when="To Date"
+        style="padding-top:34px">
+      </datepicker>
+      &nbsp;
+      &nbsp;
+      <dropdown
+        drop="sort">
+      </dropdown>
+      &nbsp;
+      &nbsp;
+      <dropdown
+        drop="filter">
+      </dropdown>
+      &nbsp;
+      &nbsp;
+      <div style="padding-top:55px;">
+        <v-btn elevation="2" color="#03cefc">
+          Reconcile
+        </v-btn>
+      </div>
+    </div>
+  </v-app>
 </template>
 
 <script>
 import card from './card.vue'
+import datepicker from './datepicker.vue'
+import dropdown from './dropdown.vue'
 export default {
-  components: { card },
-  name: 'IndexPage'
+  components: { card,datepicker, dropdown },
+  name: 'IndexPage',
 }
 </script>

@@ -31,7 +31,7 @@ export default {
   ul {
     list-style-type: none;
     padding: 0;
-    /*display: flex;*/
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
