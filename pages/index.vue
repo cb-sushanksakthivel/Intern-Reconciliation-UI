@@ -66,6 +66,9 @@
         </v-btn>
       </div>
     </div>
+    <div>
+      <mountains></mountains>
+    </div>
   </v-app>
 </template>
 
@@ -73,8 +76,11 @@
 import card from './card.vue'
 import datepicker from './datepicker.vue'
 import dropdown from './dropdown.vue'
+import Mountains from './mountains.vue'
+import mountains from './mountains.vue'
+
 export default {
-  components: { card,datepicker, dropdown },
+  components: { card,datepicker, dropdown, Mountains },
   name: 'IndexPage',
 }
 </script>
