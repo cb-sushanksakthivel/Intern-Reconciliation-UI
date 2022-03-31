@@ -1,9 +1,13 @@
 <template>
     <div>
       <div id='dropdownlist' style="margin:50px auto 0; width:250px;">
-        <ejs-dropdownlist popupHeight="200px" popupWidth="250px" 
-        :dataSource='localData' :fields='localFields' placeholder='Select a filter'
-        sortOrder='Descending' style="color:white;">
+        <ejs-dropdownlist v-if="drop=='sort'" popupHeight="200px" popupWidth="250px" 
+        :dataSource='localDataSort' :fields='localFieldsSort' placeholder='Sort By'
+        sortOrder='Ascending' style="color:white;">
+        </ejs-dropdownlist>
+        <ejs-dropdownlist v-else popupHeight="200px" popupWidth="250px" 
+        :dataSource='localDataFilter' :fields='localFieldsFilter' placeholder='Filter By'
+        sortOrder='Ascending' style="color:white;">
         </ejs-dropdownlist>
       </div>
     </div>
@@ -19,8 +23,10 @@ export default{
   },
   data: function() {
     return {
-      localData: [{Id:"Ascending",Filter:"Ascending"},{Id:"Descending",Filter:"Descending"}],
-      localFields: { text: 'Filter', value: 'Id' },
+      localDataSort:[{Id:"Ascending",Sort:"Ascending"},{Id:"Descending",Sort:"Descending"}],
+      localFieldsSort: { text: 'Sort', value: 'Id' },
+      localDataFilter:[{Id:"Customer",Filter:"Customer"},{Id:"Amount",Filter:"Amount"},{Id:"Date",Filter:"Date"},{Id:"Type",Filter:"Type"},{Id:"Matching",Filter:"Matching"}],
+      localFieldsFilter: { text: 'Filter', value: 'Id' },
     };
   }
 }

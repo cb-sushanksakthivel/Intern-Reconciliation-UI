@@ -47,14 +47,17 @@
       </datepicker>
       &nbsp;
       &nbsp;
+      <div>
       <dropdown
-        drop="sort">
+        drop="sort" style="padding-top:26px">
       </dropdown>
+      </div>
       &nbsp;
       &nbsp;
       <dropdown
-        drop="filter">
+        drop="filter" style="padding-top:26px">
       </dropdown>
+      &nbsp;
       &nbsp;
       &nbsp;
       <div style="padding-top:55px;">
