@@ -1,29 +1,10 @@
 <template>
-  <v-row>
-    <v-col class="text-center">
-      <img
-        src="/chargebee-icon-brand.png"
-        alt="Vuetify.js"
-        class="mb-5"
-        height="200px"
-        width="180px"
-      >
-      <blockquote class="blockquote">
-        Chargebee is the subscription billing and revenue 
-        management platform that lets you solve for your today, 
-        and scale for your tomorrow.
-        <footer>
-          <small>
-            <em>&mdash;Chargebee</em>
-          </small>
-        </footer>
-      </blockquote>
-    </v-col>
-  </v-row>
+<div class="container">
+    <div>
+        <h1 class="title">About</h1>
+        <p v-if="$nuxt.isOffline">you ar offline</p>   
+        <p v-if="$nuxt.isOnline">you are online</p> 
+        <NuxtLink to="/" class="button--green">Home</NuxtLink>
+    </div>
+</div>
 </template>
-
-<script>
-export default {
-  name: 'InspirePage'
-}
-</script>

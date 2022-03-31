@@ -1,77 +1,50 @@
 <template>
-  <v-app>
-    <div justify="center" align="center" style="display:flex;">
-      <v-flex lg3 sm6 xs12>
-        <card 
-          icon="mdi-bookmark-check"
-          title="134"
-          sub-title="Matches"
-          color="green">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card 
-          icon="mdi-bookmark-remove"
-          title="7"
-          sub-title="Mismatches"
-          color="red">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card 
-          icon="mdi-exclamation"
-          title="94%"
-          sub-title="Percent of matches"
-          color="purple">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card 
-          icon="mdi-account"
-          title="123456789"
-          sub-title="Customer Id"
-          color="orange">
-        </card>
-      </v-flex>
+  <div class="container">
+    <div>
+      <Logo />
+      <h1 class="title">Learn Nuxt </h1>
+      <NuxtLink to="/about" class="h-10 px-6 font-semibold rounded-md bg-black text-white">About</NuxtLink>
+      <NuxtLink to="/products" class="h-10 px-6 font-semibold rounded-md bg-black text-white">Products</NuxtLink>
     </div>
-    <div style="display:flex;">
-      <datepicker
-        when="From Date"
-        style="padding-top:34px">
-      </datepicker>
-      &nbsp;
-      &nbsp;
-      <datepicker
-        when="To Date"
-        style="padding-top:34px">
-      </datepicker>
-      &nbsp;
-      &nbsp;
-      <dropdown
-        drop="sort">
-      </dropdown>
-      &nbsp;
-      &nbsp;
-      <dropdown
-        drop="filter">
-      </dropdown>
-      &nbsp;
-      &nbsp;
-      <div style="padding-top:55px;">
-        <v-btn elevation="2" color="#03cefc">
-          Reconcile
-        </v-btn>
-      </div>
-    </div>
-  </v-app>
+  </div>
 </template>
-
 <script>
-import card from './card.vue'
-import datepicker from './datepicker.vue'
-import dropdown from './dropdown.vue'
 export default {
-  components: { card,datepicker, dropdown },
   name: 'IndexPage',
 }
 </script>
+
+<style scoped>
+/* Sample `apply` at-rules with Tailwind CSS
+.container {
+@apply min-h-screen flex justify-center items-center text-center mx-auto;
+}
+*/
+.container {
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.title {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  display: block;
+  font-weight: 300;
+  font-size: 60px;
+  color: #35495e;
+  letter-spacing: 1px;
+}
+.subtitle {
+  font-weight: 300;
+  font-size: 42px;
+  color: #526488;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+.links {
+  padding-top: 15px;
+}
+</style>
