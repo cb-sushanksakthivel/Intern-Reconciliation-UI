@@ -47,7 +47,11 @@
     },
     methods: {
       save (date) {
-        this.$refs.menu.save(date)
+        this.$refs.menu.save(date);
+        var d=new Date(date);
+        d.setHours(0,0,0,0);
+        var send=Math.floor(d.getTime()/1000);
+        this.$emit('getdate',send);
       },
     },
   }

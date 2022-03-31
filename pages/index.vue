@@ -37,13 +37,15 @@
     <div style="display:flex;">
       <datepicker
         when="From Date"
-        style="padding-top:34px">
+        style="padding-top:34px"
+        @getdate="getfdate">
       </datepicker>
       &nbsp;
       &nbsp;
       <datepicker
         when="To Date"
-        style="padding-top:34px">
+        style="padding-top:34px"
+        @getdate="gettdate">
       </datepicker>
       &nbsp;
       &nbsp;
@@ -82,5 +84,19 @@ import mountains from './mountains.vue'
 export default {
   components: { card,datepicker, dropdown, Mountains },
   name: 'IndexPage',
+  data:() => ({
+    fdate: null,
+    tdate: null,
+  }),
+  methods: {
+    getfdate(value) {
+      this.fdate=value;
+      console.log(this.fdate);
+    },
+    gettdate(value) {
+      this.tdate=value;
+      console.log(this.tdate);
+    },
+ }
 }
 </script>
