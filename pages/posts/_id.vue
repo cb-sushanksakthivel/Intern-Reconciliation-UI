@@ -2,6 +2,7 @@
   <div>
     <h1>{{ post.title }}</h1>
     <p>{{ post.description }}</p>
+    <p> {{$route.query.name}}</p>
   </div>
 </template>
 
