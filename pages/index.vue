@@ -63,13 +63,13 @@
       &nbsp;
       &nbsp;
       <div style="padding-top:55px;">
-        <v-btn elevation="2" color="#03cefc">
+        <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()">
           Reconcile
         </v-btn>
       </div>
     </div>
     <div>
-      <mountains></mountains>
+      <mountains :jobId="jobId"></mountains>
     </div>
   </v-app>
 </template>
@@ -87,6 +87,7 @@ export default {
   data:() => ({
     fdate: null,
     tdate: null,
+    jobId: "",
   }),
   methods: {
     getfdate(value) {
@@ -97,6 +98,16 @@ export default {
       this.tdate=value;
       console.log(this.tdate);
     },
+    async reconcile(){
+    const res = await this.$axios.post('/api/v1/reconcile',{
+              "siteUrl": "url1",
+              "gateway": "stripe",
+              "start": this.fdate,
+              "end": this.tdate
+          })
+          console.log(res.data.jobId);
+          this.jobId = res.data.jobId;
+            },
  }
 }
 </script>

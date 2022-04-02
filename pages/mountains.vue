@@ -12,12 +12,15 @@
                     <th class="border border-slate-600 ...">Issue</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="mountain in mountains.mismatched">
+            <tbody v-if="mountains.length!=0">
+                <tr v-for="mountain in mountains.data.mismatched">
                     <td class="border border-slate-700 ...">{{mountain.id}}</td>
                     <td class="border border-slate-700 ...">{{mountain.transactionType}}</td>
                     <td class="border border-slate-700 ...">{{mountain.issues}}</td>
                 </tr>
+            </tbody>
+            <tbody v-else>
+              <h1>No data Available</h1>
             </tbody>
         </v-simple-table>
       <button @click="$fetch">Refresh</button>
@@ -27,15 +30,21 @@
 
 <script>
   export default {
+    props: {
+   jobId: String
+ },
     data() {
       return {
         mountains: []
       }
     },
     async fetch() {
-      this.mountains = await fetch(
-        'http://localhost:8080/api/v1/reconciliation/mismatched'
-      ).then(res => res.json())
+      // get request
+      if(this.jobId!=""){
+      this.mountains = await this.$axios.get('/api/v1/job/4e4009e6-175b-472d-92b6-194d5c76866f')
+      console.log(this.mountains);
+      }
+      console.log(this.jobId);
     }
   }
 </script>
