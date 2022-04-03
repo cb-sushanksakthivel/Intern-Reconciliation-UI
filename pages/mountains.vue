@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p v-if="$fetchState.pending">Fetching mountains...</p>
-    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <p v-if="status == PENDING">Fetching mountains...</p>
+    <p v-else-if="error">An error occurred :(</p>
     <div v-else>
       <h1>Nuxt Mismatched</h1>
         <v-simple-table class="border-separate border border-slate-500 ...">
@@ -23,7 +23,9 @@
               <h1>No data Available</h1>
             </tbody>
         </v-simple-table>
-      <button @click="$fetch">Refresh</button>
+        <v-btn @click="mounted()" v-if="job.renderComponent">status: {{status}}</v-btn>
+      <v-btn elevation="2" color="#03cefc" @click="fetch()" v-if="status== 'SUCCESS'">Get Data</v-btn>
+      <v-btn elevation="2" color="#03cefc"  v-else disabled>Get Data</v-btn>
     </div>
   </div>
 </template>
@@ -31,20 +33,71 @@
 <script>
   export default {
     props: {
-   jobId: String
+   job: Object
  },
     data() {
       return {
-        mountains: []
+        mountains: [],
+        status: "",
+        error: "",
+      pollInterval: null,
+      render: this.job.renderComponent,
+
       }
     },
-    async fetch() {
-      // get request
-      if(this.jobId!=""){
-      this.mountains = await this.$axios.get('/api/v1/job/4e4009e6-175b-472d-92b6-194d5c76866f')
-      console.log(this.mountains);
+
+    watch: {
+      render: function(){
+        console.log("helloi");
+        this.fetchStatus();
       }
-      console.log(this.jobId);
-    }
+    },
+
+    methods : {
+      async fetchStatus() {
+        // get request
+        console.log("status");
+        if(this.job.jobId!=""){
+        await this.$axios.get('/api/v1/job/'+this.job.jobId+'/status')
+        .then((res)=> {
+          if(res.data.status == 'SUCCESS') {
+                  clearInterval(this.pollInterval) //won't be polled anymore 
+              }
+              this.status = res.data.status; 
+              console.log(res);
+        });
+        }
+      },
+
+       mounted(){
+        this.fetchStatus();
+        if(this.status != 'SUCCESS') {
+              this.pollInterval = setInterval(()=>{this.fetchStatus();}, 1000); //save reference to the interval
+              setTimeout(() => {clearInterval(this.pollInterval)}, 60000); //stop polling after an hour
+          }
+      },
+
+      async fetch() {
+        // get request
+        if(this.job.jobId!="" && this.status=="SUCCESS"){
+        this.mountains = await this.$axios.get('/api/v1/job/'+this.job.jobId)
+        console.log(this.mountains);
+        }
+        console.log(this.job.jobId);
+      },
+
+    },
+    // async mounted() {
+    // if(this.job.jobId!=""){
+    //     await this.$axios.get('/api/v1/job/'+this.job.jobId+'/status')
+    //     .then((res)=> {
+    //        this.status = res.data.status; 
+    //        console.log(this.status);
+    //        this.forceRerender();
+    //     });
+    //     }
+        
+    // }
+
   }
 </script>

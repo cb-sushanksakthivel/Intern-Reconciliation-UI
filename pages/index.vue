@@ -63,21 +63,27 @@
       &nbsp;
       &nbsp;
       <div style="padding-top:55px;">
-        <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()">
+        <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()" v-if="jobId.length==0">
+          Reconcile
+        </v-btn>
+        <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()" v-else disabled>
           Reconcile
         </v-btn>
       </div>
     </div>
     <div>
-      <mountains :jobId="jobId"></mountains>
+      <mountains v-bind:job="{
+    jobId: jobId,
+    renderComponent: renderComponent
+  }"></mountains>
     </div>
   </v-app>
 </template>
 
 <script>
-import card from './card.vue'
-import datepicker from './datepicker.vue'
-import dropdown from './dropdown.vue'
+import card from '../components/card.vue'
+import datepicker from '../components/datepicker.vue'
+import dropdown from '../components/dropdown.vue'
 import Mountains from './mountains.vue'
 import mountains from './mountains.vue'
 
@@ -88,8 +94,18 @@ export default {
     fdate: null,
     tdate: null,
     jobId: "",
+    renderComponent: false,
   }),
   methods: {
+          forceRerender() {
+        // Removing my-component from the DOM
+        this.renderComponent = false;
+
+        this.$nextTick(() => {
+          // Adding the component back in
+          this.renderComponent = true;
+        });
+      },
     getfdate(value) {
       this.fdate=value;
       console.log(this.fdate);
@@ -107,6 +123,7 @@ export default {
           })
           console.log(res.data.jobId);
           this.jobId = res.data.jobId;
+          this.forceRerender();
             },
  }
 }
