@@ -58,7 +58,7 @@
         // get request
         console.log("status");
         if(this.job.jobId!=""){
-        await this.$axios.get('/api/v1/job/'+this.job.jobId+'/status')
+        await this.$axios.get('/api/v1/job/status/'+this.job.jobId)
         .then((res)=> {
           if(res.data.status == 'SUCCESS') {
                   clearInterval(this.pollInterval) //won't be polled anymore 
