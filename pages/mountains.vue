@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="status == PENDING">Fetching mountains...</p>
+    <p v-if="status == 'PENDING'">Fetching mountains...</p>
     <p v-else-if="error">An error occurred :(</p>
     <div v-else>
       <h1>Nuxt Mismatched</h1>
@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody v-if="mountains.length!=0">
-                <tr v-for="mountain in mountains.data.mismatched">
+                <tr v-for="mountain in mountains.data.mismatched" v-bind:key="mountain.id">
                     <td class="border border-slate-700 ...">{{mountain.id}}</td>
                     <td class="border border-slate-700 ...">{{mountain.transactionType}}</td>
                     <td class="border border-slate-700 ...">{{mountain.issues}}</td>

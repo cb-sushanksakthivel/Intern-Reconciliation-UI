@@ -13,8 +13,8 @@
 </template>
 
 <script>
-export default {
-  name: 'EmptyLayout',
+export default{
+  name: 'ErrorLayout',
   layout: 'empty',
   props: {
     error: {

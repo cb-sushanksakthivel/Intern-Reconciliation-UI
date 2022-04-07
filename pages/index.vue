@@ -84,11 +84,10 @@
 import card from '../components/card.vue'
 import datepicker from '../components/datepicker.vue'
 import dropdown from '../components/dropdown.vue'
-import Mountains from './mountains.vue'
 import mountains from './mountains.vue'
 
 export default {
-  components: { card,datepicker, dropdown, Mountains },
+  components: { card,datepicker, dropdown, mountains },
   name: 'IndexPage',
   data:() => ({
     fdate: null,
@@ -97,15 +96,14 @@ export default {
     renderComponent: false,
   }),
   methods: {
-          forceRerender() {
-        // Removing my-component from the DOM
-        this.renderComponent = false;
-
-        this.$nextTick(() => {
-          // Adding the component back in
-          this.renderComponent = true;
-        });
-      },
+    forceRerender() {
+      // Removing my-component from the DOM
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        // Adding the component back in
+        this.renderComponent = true;
+      });
+    },
     getfdate(value) {
       this.fdate=value;
       console.log(this.fdate);
@@ -115,16 +113,16 @@ export default {
       console.log(this.tdate);
     },
     async reconcile(){
-    const res = await this.$axios.post('/api/v1/reconcile',{
+      const res = await this.$axios.post('/api/v1/reconcile',{
               "siteUrl": "url1",
               "gateway": "stripe",
               "start": this.fdate,
               "end": this.tdate
-          })
-          console.log(res.data.jobId);
-          this.jobId = res.data.jobId;
-          this.forceRerender();
-            },
+      })
+      console.log(res.data.jobId);
+      this.jobId = res.data.jobId;
+      this.forceRerender();
+    },
  }
 }
 </script>
