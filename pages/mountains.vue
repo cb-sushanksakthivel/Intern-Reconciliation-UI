@@ -33,8 +33,8 @@
 <script>
   export default {
     props: {
-   job: Object
- },
+      job: Object
+    },
     data() {
       return {
         mountains: [],
