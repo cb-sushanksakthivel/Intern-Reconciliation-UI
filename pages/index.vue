@@ -4,7 +4,7 @@
       <v-flex lg3 sm6 xs12>
         <card 
           icon="mdi-bookmark-check"
-          title="134"
+          :title=cardmatches
           sub-title="Matches"
           color="green">
         </card>
@@ -12,7 +12,7 @@
       <v-flex lg3 sm6 xs12>
         <card 
           icon="mdi-bookmark-remove"
-          title="7"
+          :title=cardmismatches
           sub-title="Mismatches"
           color="red">
         </card>
@@ -20,7 +20,7 @@
       <v-flex lg3 sm6 xs12>
         <card 
           icon="mdi-exclamation"
-          title="94%"
+          :title=cardpercentage
           sub-title="Percent of matches"
           color="purple">
         </card>
@@ -73,9 +73,10 @@
     </div>
     <div>
       <mountains v-bind:job="{
-    jobId: jobId,
-    renderComponent: renderComponent
-  }"></mountains>
+        jobId: jobId,
+        renderComponent: renderComponent
+        }">
+      </mountains>
     </div>
   </v-app>
 </template>
@@ -94,7 +95,18 @@ export default {
     tdate: null,
     jobId: "",
     renderComponent: false,
+    cardmatches:"0",
+    cardmismatches:"0",
+    cardpercentage:"0%",
   }),
+  /*created: function() {
+    const timer = setInterval(() => {
+
+    }, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      clearInterval(timer);
+    });
+  },*/
   methods: {
     forceRerender() {
       // Removing my-component from the DOM

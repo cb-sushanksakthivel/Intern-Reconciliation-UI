@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p v-if="status == 'PENDING'">Fetching mountains...</p>
+    <p v-if="status == 'PENDING'">Fetching data...</p>
     <p v-else-if="error">An error occurred :(</p>
     <div v-else>
-      <h1>Nuxt Mismatched</h1>
+      <h1>Mismatched Data</h1>
         <v-simple-table class="border-separate border border-slate-500 ...">
             <thead>
                 <tr>
@@ -12,7 +12,7 @@
                     <th class="border border-slate-600 ...">Issue</th>
                 </tr>
             </thead>
-            <tbody v-if="mountains.length!=0">
+            <tbody v-if="len!=0">
                 <tr v-for="mountain in mountains.data.mismatched" v-bind:key="mountain.id">
                     <td class="border border-slate-700 ...">{{mountain.id}}</td>
                     <td class="border border-slate-700 ...">{{mountain.transactionType}}</td>
@@ -38,11 +38,11 @@
     data() {
       return {
         mountains: [],
+        len:0,
         status: "",
         error: "",
-      pollInterval: null,
-      render: this.job.renderComponent,
-
+        pollInterval: null,
+        render: this.job.renderComponent,
       }
     },
 
@@ -58,30 +58,33 @@
         // get request
         console.log("status");
         if(this.job.jobId!=""){
-        await this.$axios.get('/api/v1/job/status/'+this.job.jobId)
-        .then((res)=> {
-          if(res.data.status == 'SUCCESS') {
-                  clearInterval(this.pollInterval) //won't be polled anymore 
-              }
-              this.status = res.data.status; 
-              console.log(res);
-        });
+          await this.$axios.get('/api/v1/job/status/'+this.job.jobId)
+          .then((res)=> {
+            if(res.data.status == 'SUCCESS') {
+              clearInterval(this.pollInterval) //won't be polled anymore 
+            }
+            this.status = res.data.status; 
+            console.log(res);
+          });
         }
       },
 
-       mounted(){
+      mounted(){
         this.fetchStatus();
         if(this.status != 'SUCCESS') {
-              this.pollInterval = setInterval(()=>{this.fetchStatus();}, 1000); //save reference to the interval
-              setTimeout(() => {clearInterval(this.pollInterval)}, 60000); //stop polling after an hour
+            this.pollInterval = setInterval(()=>{this.fetchStatus();}, 1000); //save reference to the interval
+            setTimeout(() => {clearInterval(this.pollInterval)}, 60000); //stop polling after an hour
           }
       },
 
       async fetch() {
         // get request
         if(this.job.jobId!="" && this.status=="SUCCESS"){
-        this.mountains = await this.$axios.get('/api/v1/job/'+this.job.jobId)
-        console.log(this.mountains);
+          this.mountains = await this.$axios.get('/api/v1/job/'+this.job.jobId);
+          console.log(this.mountains);
+          this.len=this.mountains.data.mismatched.length;
+          console.log(this.len);
+          this.$emit("btndatachange",this.len);
         }
         console.log(this.job.jobId);
       },

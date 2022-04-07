@@ -49,7 +49,12 @@
       save (date) {
         this.$refs.menu.save(date);
         var d=new Date(date);
-        d.setHours(0,0,0,0);
+        if(this.when.match("From Date")){
+          d.setHours(0,0,0,0);
+        }
+        else{
+          d.setHours(24,0,0,0);
+        }
         var send=Math.floor(d.getTime()/1000);
         this.$emit('getdate',send);
       },
