@@ -3,11 +3,11 @@
       <div id='dropdownlist' style="margin:50px auto 0; width:250px;">
         <ejs-dropdownlist v-if="drop=='sort'" popupHeight="200px" popupWidth="250px" 
         :dataSource='localDataSort' :fields='localFieldsSort' placeholder='Sort By'
-        sortOrder='Ascending' style="color:white;">
+        sortOrder='Ascending'>
         </ejs-dropdownlist>
         <ejs-dropdownlist v-else popupHeight="200px" popupWidth="250px" 
         :dataSource='localDataFilter' :fields='localFieldsFilter' placeholder='Filter By'
-        sortOrder='Ascending' style="color:white;">
+        sortOrder='Ascending'>
         </ejs-dropdownlist>
       </div>
     </div>

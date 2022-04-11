@@ -46,4 +46,23 @@ describe('index.vue',()=>{
     wrapper.findComponent(DropDown).vm.$emit('filter')
     expect(wrapper.html()).toContain('filter')
   });
+  it("Index fdate updating",()=>{
+    expect(wrapper.vm.fdate).toBe(null);
+    let s="2022-03-21";
+    wrapper.vm.getfdate(s);
+    expect(wrapper.vm.fdate).toBe(s);
+  });
+  it("Index tdate updating",()=>{
+    expect(wrapper.vm.tdate).toBe(null);
+    let s="2022-04-07";
+    wrapper.vm.gettdate(s);
+    expect(wrapper.vm.tdate).toBe(s);
+  });
+  it("Index forceRerender working",()=>{
+    expect(wrapper.vm.renderComponent).toBe(false);
+    wrapper.vm.$nextTick(()=>{
+      expect(wrapper.vm.renderComponent).toBe(false);
+    })
+  });
+  
 });
