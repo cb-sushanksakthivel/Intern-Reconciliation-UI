@@ -61,8 +61,7 @@ describe('index.vue',()=>{
   it("Index forceRerender working",()=>{
     expect(wrapper.vm.renderComponent).toBe(false);
     wrapper.vm.$nextTick(()=>{
-      expect(wrapper.vm.renderComponent).toBe(false);
+      expect(wrapper.vm.renderComponent).toBe(true);
     })
   });
-  
 });

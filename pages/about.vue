@@ -7,6 +7,7 @@
         class="mb-5"
         height="200px"
         width="180px"
+        @load="onImgLoad"
       >
       <blockquote class="blockquote">
         Chargebee is the subscription billing and revenue 
@@ -24,6 +25,16 @@
 
 <script>
 export default {
-  name: 'InspirePage'
+  name: 'InspirePage',
+  data () {
+    return {
+      isLoaded: false
+    }
+  },
+  methods: {
+    onImgLoad () {
+      this.isLoaded = true
+    }
+  }
 }
 </script>

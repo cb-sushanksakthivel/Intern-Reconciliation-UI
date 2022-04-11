@@ -18,4 +18,16 @@ describe('dropdown.vue',()=>{
   it("renders", () => {
     expect(wrapper.exists()).toBe(true);
   });
+  it("Dropdown has data", () => {
+    expect(typeof DropDown.data).toBeDefined;
+  });
+  it("Dropdown got props", () => {
+    const drop = "Sort"
+    const wrapper = shallowMount(DropDown,{
+      propsData: {
+        drop: drop
+      }
+    })
+    expect(wrapper.vm.drop).toBe(drop);
+  });
 });
