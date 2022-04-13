@@ -12,7 +12,7 @@
                     <th class="border border-slate-600 ...">Issue</th>
                 </tr>
             </thead>
-            <tbody v-if="len!=0">
+            <tbody v-if="mountains.length!=0">
                 <tr v-for="mountain in mountains.data.mismatched" v-bind:key="mountain.id">
                     <td class="border border-slate-700 ...">{{mountain.id}}</td>
                     <td class="border border-slate-700 ...">{{mountain.transactionType}}</td>
@@ -38,7 +38,6 @@
     data() {
       return {
         mountains: [],
-        len:0,
         status: "",
         error: "",
         pollInterval: null,
@@ -82,9 +81,6 @@
         if(this.job.jobId!="" && this.status=="SUCCESS"){
           this.mountains = await this.$axios.get('/api/v1/job/'+this.job.jobId);
           console.log(this.mountains);
-          this.len=this.mountains.data.mismatched.length;
-          console.log(this.len);
-          this.$emit("btndatachange",this.len);
         }
         console.log(this.job.jobId);
       },

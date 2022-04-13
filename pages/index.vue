@@ -99,20 +99,10 @@ export default {
     cardmismatches:"0",
     cardpercentage:"0%",
   }),
-  /*created: function() {
-    const timer = setInterval(() => {
-
-    }, 1000);
-    this.$once("hook:beforeDestroy", () => {
-      clearInterval(timer);
-    });
-  },*/
   methods: {
     forceRerender() {
-      // Removing my-component from the DOM
       this.renderComponent = false;
       this.$nextTick(() => {
-        // Adding the component back in
         this.renderComponent = true;
       });
     },
