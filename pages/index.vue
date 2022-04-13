@@ -21,7 +21,7 @@
         <card 
           icon="mdi-exclamation"
           :title=cardpercentage
-          sub-title="Percent of matches"
+          sub-title="Mismatch Rate"
           color="purple">
         </card>
       </v-flex>
@@ -72,11 +72,24 @@
       </div>
     </div>
     <div>
-      <mountains v-bind:job="{
-        jobId: jobId,
-        renderComponent: renderComponent
-        }">
-      </mountains>
+      <v-card>
+        <v-card-title>
+          Mismatched Data
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="mismatchdata"
+          :search="search"
+        ></v-data-table>
+      </v-card>
     </div>
   </v-app>
 </template>
@@ -85,10 +98,9 @@
 import card from '../components/card.vue'
 import datepicker from '../components/datepicker.vue'
 import dropdown from '../components/dropdown.vue'
-import mountains from './mountains.vue'
 
 export default {
-  components: { card,datepicker, dropdown, mountains },
+  components: { card,datepicker, dropdown},
   name: 'IndexPage',
   data:() => ({
     fdate: null,
@@ -98,13 +110,51 @@ export default {
     cardmatches:"0",
     cardmismatches:"0",
     cardpercentage:"0%",
+    search: '',
+    headers: [
+      {
+        text: 'Id',
+        align: 'start',
+        sortable: false,
+        value: 'id',
+      },
+      { text: 'Date', value: 'date' },
+      { text: 'Transaction Type', value: 'transactionType' },
+      { text: 'Currency Code', value: 'currencyCode' },
+      { text: 'Amount', value: 'amount' },
+      { text: 'Issue', value: 'issues' },
+    ],
+    datafetched:[],
+    mismatchdata: [],
+    status: "",
+    error: "",
+    pollInterval: null,
   }),
   methods: {
-    forceRerender() {
-      this.renderComponent = false;
-      this.$nextTick(() => {
-        this.renderComponent = true;
-      });
+    async fetchStatus() {
+      // get request
+      console.log("status");
+      if(this.jobId!=""){
+        await this.$axios.get('/api/v1/job/status/'+this.jobId)
+        .then((res)=> {
+          if(res.data.status == 'SUCCESS') {
+            clearInterval(this.pollInterval); //won't be polled anymore 
+            this.status = res.data.status; 
+            console.log(res);
+            this.fetch();
+          }
+        });
+        //console.log("We are venom");
+        //this.fetch();
+      }
+    },
+    fetchStatusHelper() {
+      this.fetchStatus();
+      if(this.status != 'SUCCESS') {
+        console.log(this.status);
+        this.pollInterval = setInterval(()=>{this.fetchStatus();}, 1000); //save reference to the interval
+        setTimeout(() => {clearInterval(this.pollInterval)}, 60000); //stop polling after an hour
+      }
     },
     getfdate(value) {
       this.fdate=value;
@@ -113,6 +163,20 @@ export default {
     gettdate(value) {
       this.tdate=value;
       console.log(this.tdate);
+    },
+    async fetch() {
+      // get request
+      if(this.jobId!="" && this.status=="SUCCESS"){
+        this.datafetched = await this.$axios.get('/api/v1/job/'+this.jobId);
+        console.log(this.datafetched);
+        this.mismatchdata=this.datafetched.data.mismatched;
+        console.log(this.mismatchdata);
+        this.cardmatches=this.datafetched.data.metadata.matchedCount;
+        this.cardmismatches=this.datafetched.data.metadata.mismatchedCount;
+        this.cardpercentage=((this.cardmismatches/this.cardmatches)*100).toFixed(2);
+        console.log(this.cardmatches+" "+this.cardmismatches+" "+this.cardpercentage);
+      }
+      console.log(this.jobId);
     },
     async reconcile(){
       const res = await this.$axios.post('/api/v1/reconcile',{
@@ -123,7 +187,7 @@ export default {
       })
       console.log(res.data.jobId);
       this.jobId = res.data.jobId;
-      this.forceRerender();
+      this.fetchStatusHelper();
     },
  }
 }
