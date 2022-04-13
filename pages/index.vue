@@ -173,7 +173,7 @@ export default {
         console.log(this.mismatchdata);
         this.cardmatches=this.datafetched.data.metadata.matchedCount;
         this.cardmismatches=this.datafetched.data.metadata.mismatchedCount;
-        this.cardpercentage=((this.cardmismatches/this.cardmatches)*100).toFixed(2);
+        this.cardpercentage=((this.cardmismatches/(this.cardmatches+this.cardmismatches))*100).toFixed(2);
         console.log(this.cardmatches+" "+this.cardmismatches+" "+this.cardpercentage);
       }
       console.log(this.jobId);
