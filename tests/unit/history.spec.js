@@ -1,4 +1,4 @@
-import About from '@/../pages/about.vue';
+import History from '@/../pages/history.vue';
 import { shallowMount, mount } from "@vue/test-utils";
 
 const $router = {
@@ -7,7 +7,7 @@ const $router = {
 describe('about.vue',()=>{
   let wrapper;
   beforeEach(() => {
-    wrapper = shallowMount(About, {
+    wrapper = shallowMount(History, {
       mocks: {
         $router
       }
@@ -19,11 +19,6 @@ describe('about.vue',()=>{
     expect(wrapper.exists()).toBe(true);
   });
   it("About has data", () => {
-    expect(typeof About.data).toBe('function')
-  });
-  it("About image renders", () => {
-    expect(wrapper.vm.isLoaded).toBe(false);
-    wrapper.vm.onImgLoad();
-    expect(wrapper.vm.isLoaded).toBe(true);
+    expect(typeof History.data).toBe('function')
   });
 });

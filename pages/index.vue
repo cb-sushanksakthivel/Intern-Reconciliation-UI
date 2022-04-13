@@ -28,8 +28,8 @@
       <v-flex lg3 sm6 xs12>
         <card 
           icon="mdi-account"
-          title="123456789"
-          sub-title="Customer Id"
+          :title=cardcbdomain
+          sub-title="Chargebee Domain"
           color="orange">
         </card>
       </v-flex>
@@ -47,21 +47,7 @@
         style="padding-top:34px"
         @getdate="gettdate">
       </datepicker>
-      &nbsp;
-      &nbsp;
-      <div>
-      <dropdown
-        drop="sort" style="padding-top:26px">
-      </dropdown>
-      </div>
-      &nbsp;
-      &nbsp;
-      <dropdown
-        drop="filter" style="padding-top:26px">
-      </dropdown>
-      &nbsp;
-      &nbsp;
-      &nbsp;
+      <v-spacer></v-spacer>
       <div style="padding-top:55px;">
         <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()" v-if="jobId.length==0">
           Reconcile
@@ -97,10 +83,9 @@
 <script>
 import card from '../components/card.vue'
 import datepicker from '../components/datepicker.vue'
-import dropdown from '../components/dropdown.vue'
 
 export default {
-  components: { card,datepicker, dropdown},
+  components: { card,datepicker},
   name: 'IndexPage',
   data:() => ({
     fdate: null,
@@ -110,14 +95,10 @@ export default {
     cardmatches:"0",
     cardmismatches:"0",
     cardpercentage:"0%",
+    cardcbdomain:"your-site",
     search: '',
     headers: [
-      {
-        text: 'Id',
-        align: 'start',
-        sortable: false,
-        value: 'id',
-      },
+      { text: 'Name', align: 'start', value: 'id' },
       { text: 'Date', value: 'date' },
       { text: 'Transaction Type', value: 'transactionType' },
       { text: 'Currency Code', value: 'currencyCode' },

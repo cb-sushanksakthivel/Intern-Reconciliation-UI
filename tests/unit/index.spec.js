@@ -1,5 +1,4 @@
 import Index from '@/../pages/index.vue';
-import DropDown from '@/../components/dropdown.vue';
 import DatePicker from '@/../components/datepicker.vue';
 import { shallowMount, mount } from "@vue/test-utils";
 
@@ -35,16 +34,6 @@ describe('index.vue',()=>{
     const wrapper = shallowMount(Index)
     wrapper.findComponent(DatePicker).vm.$emit('To Date')
     expect(wrapper.html()).toContain('To Date')
-  });
-  it("Index has 'sort' dropdown", () => {
-    const wrapper = shallowMount(Index)
-    wrapper.findComponent(DropDown).vm.$emit('drop')
-    expect(wrapper.html()).toContain('sort')
-  });
-  it("Index has 'filter' dropdown", () => {
-    const wrapper = shallowMount(Index)
-    wrapper.findComponent(DropDown).vm.$emit('filter')
-    expect(wrapper.html()).toContain('filter')
   });
   it("Index fdate updating",()=>{
     expect(wrapper.vm.fdate).toBe(null);
