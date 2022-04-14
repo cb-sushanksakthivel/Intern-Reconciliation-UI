@@ -49,10 +49,13 @@
       </datepicker>
       <v-spacer></v-spacer>
       <div style="padding-top:55px;">
-        <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()" v-if="jobId.length==0">
-          Reconcile
-        </v-btn>
-        <v-btn elevation="2" color="#03cefc" v-on:click="reconcile()" v-else disabled>
+        <v-btn 
+          :disabled="dialog" 
+          :loading="dialog" 
+          elevation="2" 
+          color="#03cefc" 
+          v-on:click="dialog=true" 
+        >
           Reconcile
         </v-btn>
       </div>
@@ -110,7 +113,15 @@ export default {
     status: "",
     error: "",
     pollInterval: null,
+    dialog: false,
   }),
+  watch: {
+    dialog (val) {
+      if (!val) return
+      this.reconcile();
+      setTimeout(() => (this.dialog = false), 4000);
+    },
+  },
   methods: {
     async fetchStatus() {
       // get request
@@ -152,9 +163,10 @@ export default {
         console.log(this.datafetched);
         this.mismatchdata=this.datafetched.data.mismatched;
         console.log(this.mismatchdata);
-        this.cardmatches=this.datafetched.data.metadata.matchedCount;
-        this.cardmismatches=this.datafetched.data.metadata.mismatchedCount;
-        this.cardpercentage=((this.cardmismatches/(this.cardmatches+this.cardmismatches))*100).toFixed(2);
+        var m1=this.datafetched.data.metadata.matchedCount,m2=this.datafetched.data.metadata.mismatchedCount;
+        this.cardmatches=m1.toString();
+        this.cardmismatches=m2.toString();
+        this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
         console.log(this.cardmatches+" "+this.cardmismatches+" "+this.cardpercentage);
       }
       console.log(this.jobId);
@@ -170,6 +182,6 @@ export default {
       this.jobId = res.data.jobId;
       this.fetchStatusHelper();
     },
- }
+  }
 }
 </script>

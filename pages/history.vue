@@ -93,13 +93,12 @@ export default {
       }
     },
     async fetchItems(){
-      if(this.status != "SUCCESS"){
-        const res=await this.$axios.get('/api/v1/job/',{"siteUrl": "url1"});
+      const res=await this.$axios.get("/api/v1/job/",{"siteUrl": "url1"});
+      console.log(res);
+      if(res.data.status == "SUCCESS"){
         this.status=res.data.status;
         console.log(res);
         this.items=res.data.jobIds;
-      }
-      else{
         clearInterval(this.pollInterval); //won't be polled anymore
       }
     }
