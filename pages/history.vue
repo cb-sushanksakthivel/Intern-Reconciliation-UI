@@ -74,6 +74,8 @@ export default {
         { text: 'Transaction Type', value: 'transactionType' },
         { text: 'Currency Code', value: 'currencyCode' },
         { text: 'Amount', value: 'amount' },
+        { text: 'Payment Gateway', value: 'PG'},
+        { text: 'Gateway fee', value: 'Gfee'},
         { text: 'Issue', value: 'issues' },
       ],
       reconcileddata:[],
