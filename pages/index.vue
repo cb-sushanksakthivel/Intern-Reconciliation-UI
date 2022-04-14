@@ -120,6 +120,7 @@ export default {
   watch: {
     dialog (val) {
       if (!val) return
+      this.mismatchdata=[];
       this.reconcile();
       setTimeout(() => (this.dialog = false), 4000);
     },
@@ -169,7 +170,9 @@ export default {
         var m1=this.datafetched.data.metadata.matchedCount,m2=this.datafetched.data.metadata.mismatchedCount;
         this.cardmatches=m1.toString();
         this.cardmismatches=m2.toString();
-        this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
+        if(m1+m2!=0){
+          this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
+        }
       }
       console.log(this.jobId);
     },
