@@ -124,6 +124,9 @@ export default {
       setTimeout(() => (this.dialog = false), 4000);
     },
   },
+  mounted(){
+    this.getcburl();
+  },
   methods: {
     async fetchStatus() {
       // get request
@@ -180,6 +183,10 @@ export default {
       console.log(res.data.jobId);
       this.jobId = res.data.jobId;
       this.fetchStatusHelper();
+    },
+    async getcburl(){
+      const res= await this.$axios.get('/api/v1/site_url');
+      this.cardcbdomain=res.data;
     },
   }
 }
