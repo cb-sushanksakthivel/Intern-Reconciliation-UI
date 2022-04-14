@@ -101,7 +101,8 @@ export default {
     cardcbdomain:"your-site",
     search: '',
     headers: [
-      { text: 'Name', align: 'start', value: 'id' },
+      { text: 'Gateway', align: 'start', value: 'gateWay' },
+      { text: 'Payment Method', value: 'paymentMethod' },
       { text: 'Date', value: 'date' },
       { text: 'Transaction Type', value: 'transactionType' },
       { text: 'Currency Code', value: 'currencyCode' },
