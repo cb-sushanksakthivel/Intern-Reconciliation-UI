@@ -20,10 +20,10 @@
               :key="i"
             >
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon v-text="i"></v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
+                <v-list-item-title v-text="item"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
@@ -81,27 +81,26 @@ export default {
       pollInterval: null,
     }
   },
-  mounted(){
-    this.fetchItemsHelper();
-  },
-  methods:{
-    fetchItemsHelper(){
-      this.fetchItems();
-      if(this.status != 'SUCCESS') {
-        this.pollInterval = setInterval(()=>{this.fetchItems();}, 1000); //save reference to the interval
-        setTimeout(() => {clearInterval(this.pollInterval)}, 60000); //stop polling after an hour
+  watch: {
+    selectedItem (val) {
+      if(val!=null){
+        const jobid=this.items[val];
+        this.fetchreconcileddata(jobid);
       }
     },
+  },
+  mounted(){
+    this.fetchItems();
+  },
+  methods:{
     async fetchItems(){
-      const res=await this.$axios.get("/api/v1/job/",{"siteUrl": "url1"});
-      console.log(res);
-      if(res.data.status == "SUCCESS"){
-        this.status=res.data.status;
-        console.log(res);
-        this.items=res.data.jobIds;
-        clearInterval(this.pollInterval); //won't be polled anymore
-      }
-    }
+      const res=await this.$axios.post("/api/v1/job/",{"siteUrl": "url1"});
+      this.items=res.data.jobIds;
+    },
+    async fetchreconcileddata(val){
+      const res=await this.$axios.get('/api/v1/job/'+val);
+      this.reconcileddata=res.data.mismatched;
+    },
   }
 }
 </script>
