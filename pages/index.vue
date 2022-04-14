@@ -101,14 +101,13 @@ export default {
     cardcbdomain:"your-site",
     search: '',
     headers: [
-      { text: 'Gateway', align: 'start', value: 'gateWay' },
-      { text: 'Payment Method', value: 'paymentMethod' },
+      { text: 'Name', align: 'start', value: 'id' },
       { text: 'Date', value: 'date' },
       { text: 'Transaction Type', value: 'transactionType' },
       { text: 'Currency Code', value: 'currencyCode' },
       { text: 'Amount', value: 'amount' },
-      { text: 'Payment Gateway', value: 'PG'},
-      { text: 'Gateway fee', value: 'Gfee'},
+      { text: 'Gateway', value: 'gateWay' },
+      { text: 'Payment Method', value: 'paymentMethod' },
       { text: 'Issue', value: 'issues' },
     ],
     datafetched:[],
@@ -163,14 +162,11 @@ export default {
       // get request
       if(this.jobId!="" && this.status=="SUCCESS"){
         this.datafetched = await this.$axios.get('/api/v1/job/'+this.jobId);
-        console.log(this.datafetched);
         this.mismatchdata=this.datafetched.data.mismatched;
-        console.log(this.mismatchdata);
         var m1=this.datafetched.data.metadata.matchedCount,m2=this.datafetched.data.metadata.mismatchedCount;
         this.cardmatches=m1.toString();
         this.cardmismatches=m2.toString();
         this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
-        console.log(this.cardmatches+" "+this.cardmismatches+" "+this.cardpercentage);
       }
       console.log(this.jobId);
     },
