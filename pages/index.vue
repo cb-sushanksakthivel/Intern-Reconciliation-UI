@@ -2,7 +2,7 @@
   <v-app>
     <div justify="center" align="center" style="display:flex;">
       <v-flex lg3 sm6 xs12>
-        <card 
+        <card
           icon="mdi-bookmark-check"
           :title=cardmatches
           sub-title="Matches"
@@ -10,7 +10,7 @@
         </card>
       </v-flex>
       <v-flex lg3 sm6 xs12>
-        <card 
+        <card
           icon="mdi-bookmark-remove"
           :title=cardmismatches
           sub-title="Mismatches"
@@ -18,7 +18,7 @@
         </card>
       </v-flex>
       <v-flex lg3 sm6 xs12>
-        <card 
+        <card
           icon="mdi-exclamation"
           :title=cardpercentage
           sub-title="Mismatch Rate"
@@ -26,7 +26,7 @@
         </card>
       </v-flex>
       <v-flex lg3 sm6 xs12>
-        <card 
+        <card
           icon="mdi-account"
           :title=cardcbdomain
           sub-title="Chargebee Domain"
@@ -49,12 +49,12 @@
       </datepicker>
       <v-spacer></v-spacer>
       <div style="padding-top:55px;">
-        <v-btn 
-          :disabled="dialog" 
-          :loading="dialog" 
-          elevation="2" 
-          color="#03cefc" 
-          v-on:click="dialog=true" 
+        <v-btn
+          :disabled="dialog"
+          :loading="dialog"
+          elevation="2"
+          color="#03cefc"
+          v-on:click="dialog=true"
         >
           Reconcile
         </v-btn>
@@ -108,7 +108,8 @@ export default {
       { text: 'Amount', value: 'amount' },
       { text: 'Gateway', value: 'gateWay' },
       { text: 'Payment Method', value: 'paymentMethod' },
-      { text: 'Issue', value: 'issues' },
+      { text: 'Gateway Fee', value: 'gatewayFee'},
+      { text: 'Issue', value: 'issues' }
     ],
     datafetched:[],
     mismatchdata: [],
@@ -136,8 +137,8 @@ export default {
         await this.$axios.get('/api/v1/job/status/'+this.jobId)
         .then((res)=> {
           if(res.data.status == 'SUCCESS') {
-            clearInterval(this.pollInterval); //won't be polled anymore 
-            this.status = res.data.status; 
+            clearInterval(this.pollInterval); //won't be polled anymore
+            this.status = res.data.status;
             console.log(res);
             this.fetch();
           }
