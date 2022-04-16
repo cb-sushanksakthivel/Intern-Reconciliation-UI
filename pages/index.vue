@@ -80,6 +80,29 @@
         ></v-data-table>
       </v-card>
     </div>
+    <v-dialog
+      v-model="dialog2"
+      max-width="320"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Check the dates chosen
+        </v-card-title>
+        <v-card-text>
+          Looks like you didn't enter one or both of the dates or you might have entered the from date ahead of to date.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog2 = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -117,13 +140,20 @@ export default {
     error: "",
     pollInterval: null,
     dialog: false,
+    dialog2: false,
   }),
   watch: {
     dialog (val) {
-      if (!val) return
-      this.mismatchdata=[];
-      this.reconcile();
-      setTimeout(() => (this.dialog = false), 4000);
+      if(this.fdate<=this.tdate && !(this.fdate==null||this.tdate==null)){
+        if (!val) return
+        this.mismatchdata=[];
+        this.reconcile();
+        setTimeout(() => (this.dialog = false), 4000);
+      }
+      else{
+        this.dialog=false;
+        this.dialog2=true;
+      }
     },
   },
   mounted(){
@@ -142,9 +172,7 @@ export default {
             console.log(res);
             this.fetch();
           }
-        });
-        //console.log("We are venom");
-        //this.fetch();
+        }); 
       }
     },
     fetchStatusHelper() {
