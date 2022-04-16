@@ -128,10 +128,11 @@ export default {
       { text: 'Date', value: 'date' },
       { text: 'Transaction Type', value: 'transactionType' },
       { text: 'Currency Code', value: 'currencyCode' },
-      { text: 'Amount', value: 'amount' },
       { text: 'Gateway', value: 'gateWay' },
       { text: 'Payment Method', value: 'paymentMethod' },
+      { text: 'Amount', value: 'actualamount' },
       { text: 'Gateway Fee', value: 'gatewayFee'},
+      { text: 'Total Amount', value: 'amount' },
       { text: 'Issue', value: 'issues' }
     ],
     datafetched:[],
