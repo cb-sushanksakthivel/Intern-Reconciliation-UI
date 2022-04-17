@@ -124,7 +124,7 @@ export default {
     cardcbdomain:"your-site",
     search: '',
     headers: [
-      { text: 'Name', align: 'start', value: 'id' },
+      { text: 'Name', align: 'start', value: 'name' },
       { text: 'Date', value: 'date' },
       { text: 'Transaction Type', value: 'transactionType' },
       { text: 'Currency Code', value: 'currencyCode' },
@@ -197,6 +197,7 @@ export default {
       if(this.jobId!="" && this.status=="SUCCESS"){
         this.datafetched = await this.$axios.get('/api/v1/job/'+this.jobId);
         this.mismatchdata=this.datafetched.data.mismatched;
+        console.log(this.mismatchdata);
         var m1=this.datafetched.data.metadata.matchedCount,m2=this.datafetched.data.metadata.mismatchedCount;
         this.cardmatches=m1.toString();
         this.cardmismatches=m2.toString();
