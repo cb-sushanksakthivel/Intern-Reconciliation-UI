@@ -39,6 +39,40 @@
         </v-list-item-group>
       </v-list>
     </v-card>
+    <div justify="center" align="center" style="display:flex;">
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-bookmark-check"
+          :title=cardmatches
+          sub-title="Matches"
+          color="green">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-bookmark-remove"
+          :title=cardmismatches
+          sub-title="Mismatches"
+          color="red">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-exclamation"
+          :title=cardpercentage
+          sub-title="Mismatch Rate"
+          color="purple">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-account"
+          :title=cardcbdomain
+          sub-title="Chargebee Domain"
+          color="orange">
+        </card>
+      </v-flex>
+    </div>
     <v-card>
       <v-card-title>
         Reconciled Data
@@ -65,18 +99,24 @@ export default {
   name: 'HistoryPage',
   data () {
     return {
+      cardmatches:"0",
+      cardmismatches:"0",
+      cardpercentage:"0%",
+      cardcbdomain:"your-site",
       selectedItem: null,
       items: [],
       search: '',
       headers: [
-        { text: 'Name', align: 'start', value: 'id' },
+        { text: 'Name', align: 'start', value: 'name' },
         { text: 'Date', value: 'date' },
         { text: 'Transaction Type', value: 'transactionType' },
         { text: 'Currency Code', value: 'currencyCode' },
-        { text: 'Amount', value: 'amount' },
         { text: 'Gateway', value: 'gateWay' },
         { text: 'Payment Method', value: 'paymentMethod' },
-        { text: 'Issue', value: 'issues' },
+        { text: 'Amount', value: 'actualamount' },
+        { text: 'Gateway Fee', value: 'gatewayFee'},
+        { text: 'Total Amount', value: 'amount' },
+        { text: 'Issue', value: 'issues' }
       ],
       reconcileddata:[],
       status:"",
@@ -93,6 +133,7 @@ export default {
   },
   mounted(){
     this.fetchItems();
+    this.getcburl();
   },
   methods:{
     async fetchItems(){
@@ -102,6 +143,16 @@ export default {
     async fetchreconcileddata(val){
       const res=await this.$axios.get('/api/v1/job/'+val);
       this.reconcileddata=res.data.mismatched;
+      var m1=res.data.metadata.matchedCount,m2=res.data.metadata.mismatchedCount;
+      this.cardmatches=m1.toString();
+      this.cardmismatches=m2.toString();
+      if(m1+m2!=0){
+        this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
+      }
+    },
+    async getcburl(){
+      const res= await this.$axios.get('/api/v1/site_url');
+      this.cardcbdomain=res.data;
     },
   }
 }
