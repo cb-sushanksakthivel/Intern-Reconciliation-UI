@@ -149,7 +149,7 @@ export default {
         if (!val) return
         this.mismatchdata=[];
         this.reconcile();
-        setTimeout(() => (this.dialog = false), 4000);
+        setTimeout(() => (this.dialog = false), 8000);
       }
       else{
         this.dialog=false;
