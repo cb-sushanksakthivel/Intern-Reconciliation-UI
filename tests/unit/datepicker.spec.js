@@ -23,7 +23,7 @@ describe('datepicker.vue',()=>{
   });
   it("Datepicker got props", () => {
     const when = "From Date"
-    const wrapper = mount(DatePicker,{
+    wrapper = mount(DatePicker,{
       propsData: {
         when: when
       }

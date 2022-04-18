@@ -39,7 +39,7 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    <div justify="center" align="center" style="display:flex;">
+    <div justify="center" style="display:flex;">
       <v-flex lg3 sm6 xs12>
         <card
           icon="mdi-bookmark-check"

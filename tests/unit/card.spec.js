@@ -20,7 +20,7 @@ describe('card.vue',()=>{
   });
   it("Card got props - icon", () => {
     const icon = "mdi-bookmark-check"
-    const wrapper = mount(Card,{
+    wrapper = mount(Card,{
       propsData: {
         icon: icon
       }
@@ -29,7 +29,7 @@ describe('card.vue',()=>{
   });
   it("Card got props - title", () => {
     const title = "134"
-    const wrapper = mount(Card,{
+    wrapper = mount(Card,{
       propsData: {
         title: title
       }
@@ -38,7 +38,7 @@ describe('card.vue',()=>{
   });
   it("Card got props - subTitle", () => {
     const subTitle = "Matches"
-    const wrapper = mount(Card,{
+    wrapper = mount(Card,{
       propsData: {
         subTitle: subTitle
       }
@@ -47,7 +47,7 @@ describe('card.vue',()=>{
   });
   it("Card got props - color", () => {
     const color = "green"
-    const wrapper = mount(Card,{
+    wrapper = mount(Card,{
       propsData: {
         color: color
       }

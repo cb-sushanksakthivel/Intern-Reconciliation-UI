@@ -1,6 +1,6 @@
 import Index from '@/../pages/index.vue';
 import DatePicker from '@/../components/datepicker.vue';
-import { shallowMount, mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 
 const $router = {
   replace: jest.fn()
@@ -26,12 +26,12 @@ describe('index.vue',()=>{
     expect(wrapper.html()).toContain("Reconcile")
   });
   it("Index has 'From Date' dropdown", () => {
-    const wrapper = shallowMount(Index)
+    wrapper = shallowMount(Index)
     wrapper.findComponent(DatePicker).vm.$emit('From Date')
     expect(wrapper.html()).toContain('From Date')
   });
   it("Index has 'To Date' datepicker", () => {
-    const wrapper = shallowMount(Index)
+    wrapper = shallowMount(Index)
     wrapper.findComponent(DatePicker).vm.$emit('To Date')
     expect(wrapper.html()).toContain('To Date')
   });

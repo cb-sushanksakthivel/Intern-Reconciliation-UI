@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--<div class="mb-6">Active picker: <code>{{ activePicker || 'null' }}</code></div>-->
     <v-menu
       ref="menu"
       v-model="menu"
@@ -10,7 +9,7 @@
       min-width="auto"
     >
       <template v-slot:activator="{ on, attrs }">
-        <div align="center">{{when}}</div>
+        <div>{{when}}</div>
         <v-text-field
           v-model="date"
           prepend-icon="mdi-calendar"

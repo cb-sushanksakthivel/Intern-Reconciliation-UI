@@ -1,5 +1,5 @@
 import History from '@/../pages/history.vue';
-import { shallowMount, mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 
 const $router = {
   replace: jest.fn()
