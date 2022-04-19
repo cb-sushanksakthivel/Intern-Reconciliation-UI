@@ -66,11 +66,6 @@ export default {
           title: 'DashBoard',
           to: '/'
         },
-        {
-          icon: 'mdi-history',
-          title: 'History',
-          to: '/history',
-        }
       ],
       miniVariant: false,
       right: true,
