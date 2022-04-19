@@ -30,6 +30,10 @@
         :cardmismatches=cardmismatches
         :cardpercentage=cardpercentage
         :cardcbdomain=cardcbdomain
+        :cardtotalamount=cardtotalamount
+        :cardtotalgatewayfee=cardtotalgatewayfee
+        :cardtotalcustomerpaid=cardtotalcustomerpaid
+        :cardfreqcurrency=cardfreqcurrency
         :search=search
         :mismatchdata=mismatchdata>
       </recondata>
@@ -73,12 +77,17 @@
               <div style="display:flex;">
                 &nbsp;
                 &nbsp;
-                &nbsp;
                 <v-list-item-content>
                   <v-list-item-title>From Date</v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-content>
                   <v-list-item-title>To Date</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>Reconciled Date</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>Reconciled Time</v-list-item-title>
                 </v-list-item-content>
               </div>
               <hr>
@@ -91,6 +100,12 @@
                 </v-list-item-content>
                 <v-list-item-content>
                   <v-list-item-title v-text="item[2]"></v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item[3]"></v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item[4]"></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -129,6 +144,10 @@ export default {
     cardmismatches:"0",
     cardpercentage:"0%",
     cardcbdomain:"your-site",
+    cardtotalamount:"0",
+    cardtotalgatewayfee:"0",
+    cardtotalcustomerpaid:"0",
+    cardfreqcurrency:"None",
     search: '',
     mismatchdata: [],
     datafetched:[],
@@ -144,7 +163,6 @@ export default {
         if (!val) return
         this.mismatchdata=[];
         this.reconcile();
-        setTimeout(() => (this.dialog = false), 12000);
       }
       else{
         this.dialog=false;
@@ -153,7 +171,6 @@ export default {
     },
     selectedItem (val) {
       if(val!=null){
-        console.log(val);
         this.jobId=this.items[val][0];
         this.status="SUCCESS";
         this.fetch();
@@ -173,9 +190,11 @@ export default {
         var temp2=spl.split(",");
         temp2[1]=temp2[1].split(" ")[0];
         temp2[2]=temp2[2].split(" ")[0];
+        var temp3=temp2[3].split(" ");
+        temp2[3]=temp3[0];
+        temp2[4]=temp3[1];
         temp.push(temp2);
       }
-      console.log(temp);
       this.items=temp;
     },
     async fetchStatus() {
@@ -187,7 +206,6 @@ export default {
           if(res.data.status == 'SUCCESS') {
             clearInterval(this.pollInterval); //won't be polled anymore
             this.status = res.data.status;
-            console.log(res);
             this.fetch();
           }
         }); 
@@ -196,35 +214,51 @@ export default {
     fetchStatusHelper() {
       this.fetchStatus();
       if(this.status != 'SUCCESS') {
-        console.log(this.status);
         this.pollInterval = setInterval(()=>{this.fetchStatus();}, 1000); //save reference to the interval
         setTimeout(() => {clearInterval(this.pollInterval)}, 60000); //stop polling after an hour
       }
     },
     getfdate(value) {
       this.fdate=value;
-      console.log(this.fdate);
     },
     gettdate(value) {
       this.tdate=value;
-      console.log(this.tdate);
     },
     async fetch() {
       // get request
-      console.log(this.jobId+" "+this.status);
       if(this.jobId!="" && this.status=="SUCCESS"){
         this.datafetched = await this.$axios.get('/api/v1/job/'+this.jobId);
+        console.log(this.datafetched);
         this.mismatchdata=this.datafetched.data.mismatched;
-        console.log(this.mismatchdata);
         var m1=this.datafetched.data.metadata.matchedCount,m2=this.datafetched.data.metadata.mismatchedCount;
         this.cardmatches=m1.toString();
         this.cardmismatches=m2.toString();
         if(m1+m2!=0){
           this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
         }
+        var totamt=0.0,totgfee=0.0,totcustpaid=0.0,map={},freq=0,freqcurrency="None";
+        for(var loop of this.mismatchdata){
+          totamt=totamt+loop.actualamount;
+          totgfee=totgfee+loop.gatewayFee;
+          var temp=loop.currencyCode;
+          if(map[temp]==null)
+            map[temp]=1;
+          else
+            map[temp]++;
+          if(map[temp]>freq){
+            freq=map[temp];
+            freqcurrency=temp;
+          }
+        }
+        this.cardfreqcurrency=freqcurrency;
+        totcustpaid=totamt+totgfee;
+        this.cardtotalamount=totamt.toString();
+        this.cardtotalgatewayfee=totgfee.toString();
+        this.cardtotalcustomerpaid=totcustpaid.toString();
+
         this.fetchItems();
+        this.dialog=false;
       }
-      console.log(this.jobId);
     },
     async reconcile(){
       const res = await this.$axios.post('/api/v1/reconcile',{
@@ -233,7 +267,6 @@ export default {
               "start": this.fdate,
               "end": this.tdate
       })
-      console.log(res.data.jobId);
       this.jobId = res.data.jobId;
       this.fetchStatusHelper();
     },

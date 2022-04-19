@@ -34,6 +34,42 @@
         </card>
       </v-flex>
     </div>
+    <br>
+    <div justify="center" style="display:flex;">
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-cash-multiple"
+          :title=cardtotalamount
+          sub-title="Total amount obtained"
+          color="brown">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-cash-multiple"
+          :title=cardtotalgatewayfee
+          sub-title="Total Gateway consumed fee"
+          color="blue">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-cash-multiple"
+          :title=cardtotalcustomerpaid
+          sub-title="Total amount Customer paid"
+          color="teal">
+        </card>
+      </v-flex>
+      <v-flex lg3 sm6 xs12>
+        <card
+          icon="mdi-cash-multiple"
+          :title=cardfreqcurrency
+          sub-title="Most used Currency Code"
+          color="cyan">
+        </card>
+      </v-flex>
+    </div>
+    <br>
     <div>
       <v-card>
         <v-card-title>
@@ -68,6 +104,10 @@ export default {
     cardmismatches:String,
     cardpercentage:String,
     cardcbdomain:String,
+    cardtotalamount:String,
+    cardtotalgatewayfee:String,
+    cardtotalcustomerpaid:String,
+    cardfreqcurrency:String,
     search:String,
     mismatchdata:Array,
   },
