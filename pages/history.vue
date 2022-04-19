@@ -51,64 +51,25 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    <div justify="center" style="display:flex;">
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-bookmark-check"
-          :title=cardmatches
-          sub-title="Matches"
-          color="green">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-bookmark-remove"
-          :title=cardmismatches
-          sub-title="Mismatches"
-          color="red">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-exclamation"
-          :title=cardpercentage
-          sub-title="Mismatch Rate"
-          color="purple">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-account"
-          :title=cardcbdomain
-          sub-title="Chargebee Domain"
-          color="orange">
-        </card>
-      </v-flex>
+    <div>
+      <recondata
+        :cardmatches=cardmatches
+        :cardmismatches=cardmismatches
+        :cardpercentage=cardpercentage
+        :cardcbdomain=cardcbdomain
+        :search=search
+        :mismatchdata=reconcileddata>
+      </recondata>
     </div>
-    <v-card>
-      <v-card-title>
-        Reconciled Data
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
-      <v-data-table
-        :headers="headers"
-        :items="reconcileddata"
-        :search="search"
-      ></v-data-table>
-    </v-card>
   </v-app>
 </template>
 
 <script>
+import recondata from '../components/recondata.vue'
+
 export default {
   name: 'HistoryPage',
+  components: { recondata },
   data () {
     return {
       cardmatches:"0",

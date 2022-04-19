@@ -1,54 +1,18 @@
 <template>
   <v-app>
-    <div justify="center" style="display:flex;">
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-bookmark-check"
-          :title=cardmatches
-          sub-title="Matches"
-          color="green">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-bookmark-remove"
-          :title=cardmismatches
-          sub-title="Mismatches"
-          color="red">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-exclamation"
-          :title=cardpercentage
-          sub-title="Mismatch Rate"
-          color="purple">
-        </card>
-      </v-flex>
-      <v-flex lg3 sm6 xs12>
-        <card
-          icon="mdi-account"
-          :title=cardcbdomain
-          sub-title="Chargebee Domain"
-          color="orange">
-        </card>
-      </v-flex>
-    </div>
-    <div style="display:flex;">
+    <div style="display:flex;padding-top:15px;">
       <datepicker
         when="From Date"
-        style="padding-top:34px"
         @getdate="getfdate">
       </datepicker>
       &nbsp;
       &nbsp;
       <datepicker
         when="To Date"
-        style="padding-top:34px"
         @getdate="gettdate">
       </datepicker>
       <v-spacer></v-spacer>
-      <div style="padding-top:55px;">
+      <div style="padding-top:20px;">
         <v-btn
           :disabled="dialog"
           :loading="dialog"
@@ -61,24 +25,14 @@
       </div>
     </div>
     <div>
-      <v-card>
-        <v-card-title>
-          Mismatched Data
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
-        <v-data-table
-          :headers="headers"
-          :items="mismatchdata"
-          :search="search"
-        ></v-data-table>
-      </v-card>
+      <recondata
+        :cardmatches=cardmatches
+        :cardmismatches=cardmismatches
+        :cardpercentage=cardpercentage
+        :cardcbdomain=cardcbdomain
+        :search=search
+        :mismatchdata=mismatchdata>
+      </recondata>
     </div>
     <v-dialog
       v-model="dialog2"
@@ -109,9 +63,10 @@
 <script>
 import card from '../components/card.vue'
 import datepicker from '../components/datepicker.vue'
+import recondata from '../components/recondata.vue'
 
 export default {
-  components: { card,datepicker},
+  components: { card, datepicker, recondata},
   name: 'IndexPage',
   data:() => ({
     fdate: null,
@@ -123,20 +78,8 @@ export default {
     cardpercentage:"0%",
     cardcbdomain:"your-site",
     search: '',
-    headers: [
-      { text: 'Name', align: 'start', value: 'name' },
-      { text: 'Date', value: 'date' },
-      { text: 'Transaction Type', value: 'transactionType' },
-      { text: 'Currency Code', value: 'currencyCode' },
-      { text: 'Gateway', value: 'gateWay' },
-      { text: 'Payment Method', value: 'paymentMethod' },
-      { text: 'Amount', value: 'actualamount' },
-      { text: 'Gateway Fee', value: 'gatewayFee'},
-      { text: 'Total Amount', value: 'amount' },
-      { text: 'Issue', value: 'issues' }
-    ],
-    datafetched:[],
     mismatchdata: [],
+    datafetched:[],
     status: "",
     error: "",
     pollInterval: null,
