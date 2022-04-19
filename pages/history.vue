@@ -2,13 +2,23 @@
   <v-app>
     <v-card
     class="mx-auto"
-    max-width="400"
+    max-width="700"
     tile
     >
       <v-list rounded>
         <v-header>Previous Reconciliations</v-header>
         <br>
         <br>
+        <div justify="center" style="display:flex;">
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <p>From Date</p>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <p>To Date</p>
+        </div>
         <v-list-item-group
           v-model="selectedItem"
           color="primary"
@@ -19,11 +29,13 @@
               v-for="(item, i) in items"
               :key="i"
             >
-              <v-list-item-icon>
-                <v-icon v-text="i"></v-icon>
-              </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="item"></v-list-item-title>
+                <v-list-item-title v-text="item[1]"></v-list-item-title>
+              </v-list-item-content>
+              &nbsp;
+              &nbsp;
+              <v-list-item-content>
+                <v-list-item-title v-text="item[2]"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </div>
@@ -126,7 +138,8 @@ export default {
   watch: {
     selectedItem (val) {
       if(val!=null){
-        const jobid=this.items[val];
+        console.log(val);
+        const jobid=this.items[val][0];
         this.fetchreconcileddata(jobid);
       }
     },
@@ -138,7 +151,16 @@ export default {
   methods:{
     async fetchItems(){
       const res=await this.$axios.post("/api/v1/job/",{"siteUrl": "url1"});
-      this.items=res.data.jobIds;
+      let splt=res.data.arr;
+      let temp=[];
+      for(var i=0;i<splt.length;i++){
+        var temp2=splt[i].split(",");
+        temp2[1]=temp2[1].split(" ")[0];
+        temp2[2]=temp2[2].split(" ")[0];
+        temp.push(temp2);
+      }
+      console.log(temp);
+      this.items=temp;
     },
     async fetchreconcileddata(val){
       const res=await this.$axios.get('/api/v1/job/'+val);

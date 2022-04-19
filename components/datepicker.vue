@@ -52,7 +52,7 @@
           d.setHours(0,0,0,0);
         }
         else{
-          d.setHours(24,0,0,0);
+          d.setHours(23,59,59,59);
         }
         var send=Math.floor(d.getTime()/1000);
         this.$emit('getdate',send);
