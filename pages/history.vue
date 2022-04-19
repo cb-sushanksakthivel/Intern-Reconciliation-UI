@@ -153,8 +153,8 @@ export default {
       const res=await this.$axios.post("/api/v1/job/",{"siteUrl": "url1"});
       let splt=res.data.arr;
       let temp=[];
-      for(var i=0;i<splt.length;i++){
-        var temp2=splt[i].split(",");
+      for(let spl of splt){
+        var temp2=spl.split(",");
         temp2[1]=temp2[1].split(" ")[0];
         temp2[2]=temp2[2].split(" ")[0];
         temp.push(temp2);
