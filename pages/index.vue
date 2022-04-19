@@ -1,55 +1,5 @@
 <template>
   <v-app>
-    <div>
-      <v-card
-        class="mx-auto"
-        max-width="700"
-        tile
-      >
-        <div v-if="items.length!=0">          
-          <v-list rounded>
-            <v-header>Previous Reconciliations</v-header>
-            <v-list-item-group
-              v-model="selectedItem"
-              color="primary"
-            >
-              <div style="display:flex;">
-                &nbsp;
-                &nbsp;
-                &nbsp;
-                <v-list-item-content>
-                  <v-list-item-title>From Date</v-list-item-title>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-list-item-title>To Date</v-list-item-title>
-                </v-list-item-content>
-              </div>
-              <hr>
-              <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-              >
-                <v-list-item-content>
-                  <v-list-item-title v-text="item[1]"></v-list-item-title>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item[2]"></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </div>
-        <div v-else>
-          <card 
-            icon="mdi-emoticon-sad-outline"
-            sub-title="No Previous Reconciliations"
-            font-size=34
-            color="black"
-          >
-          </card>
-        </div>
-      </v-card>
-    </div>
     <div style="display:flex;padding-top:15px;">
       <datepicker
         when="From Date"
@@ -107,6 +57,56 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div style="padding-top:30px;">
+      <v-card
+        class="mx-auto"
+        max-width="700"
+        tile
+      >
+        <div v-if="items.length!=0">          
+          <v-list rounded>
+            <v-header>Previous Reconciliations</v-header>
+            <v-list-item-group
+              v-model="selectedItem"
+              color="primary"
+            >
+              <div style="display:flex;">
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <v-list-item-content>
+                  <v-list-item-title>From Date</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>To Date</v-list-item-title>
+                </v-list-item-content>
+              </div>
+              <hr>
+              <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+              >
+                <v-list-item-content>
+                  <v-list-item-title v-text="item[1]"></v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item[2]"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+        <div v-else>
+          <card 
+            icon="mdi-emoticon-sad-outline"
+            sub-title="No Previous Reconciliations"
+            font-size=34
+            color="black"
+          >
+          </card>
+        </div>
+      </v-card>
+    </div>
   </v-app>
 </template>
 
@@ -144,7 +144,7 @@ export default {
         if (!val) return
         this.mismatchdata=[];
         this.reconcile();
-        setTimeout(() => (this.dialog = false), 8000);
+        setTimeout(() => (this.dialog = false), 12000);
       }
       else{
         this.dialog=false;
