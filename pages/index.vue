@@ -222,6 +222,7 @@ export default {
         if(m1+m2!=0){
           this.cardpercentage=(((m2/(m1+m2))*100).toFixed(2)).toString();
         }
+        this.fetchItems();
       }
       console.log(this.jobId);
     },
