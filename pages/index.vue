@@ -226,11 +226,9 @@ export default {
     },
     getfdate(value) {
       this.fdate=value;
-      console.log(this.fdate);
     },
     gettdate(value) {
       this.tdate=value;
-      console.log(this.tdate);
     },
     async fetch() {
       // get request
