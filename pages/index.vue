@@ -189,7 +189,7 @@ export default {
   },
   methods: {
     async fetchItems(){
-      const res=await this.$axios.post("/api/v1/job/",{"siteUrl": "url1"});
+      const res=await this.$axios.get("/api/v1/job/");
       let splt=res.data.arr;
       let temp=[];
       for(let spl of splt){
@@ -226,9 +226,11 @@ export default {
     },
     getfdate(value) {
       this.fdate=value;
+      console.log(this.fdate);
     },
     gettdate(value) {
       this.tdate=value;
+      console.log(this.tdate);
     },
     async fetch() {
       // get request
