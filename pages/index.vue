@@ -161,6 +161,12 @@ export default {
     dialog (val) {
       if(this.fdate<=this.tdate && !(this.fdate==null||this.tdate==null)){
         if (!val) return
+        this.cardmatches="0";
+        this.cardmismatches="0";
+        this.cardpercentage="0%";
+        this.cardtotalamount="0";
+        this.cardtotalgatewayfee="0";
+        this.cardtotalcustomerpaid="0";
         this.mismatchdata=[];
         this.reconcile();
       }
@@ -252,10 +258,10 @@ export default {
         }
         this.cardfreqcurrency=freqcurrency;
         totcustpaid=totamt+totgfee;
-        this.cardtotalamount=totamt.toString();
-        this.cardtotalgatewayfee=totgfee.toString();
-        this.cardtotalcustomerpaid=totcustpaid.toString();
-
+        this.cardtotalamount=totamt.toFixed(4).toString();
+        this.cardtotalgatewayfee=totgfee.toFixed(4).toString();
+        this.cardtotalcustomerpaid=totcustpaid.toFixed(4).toString();
+        this.status="";
         this.fetchItems();
         this.dialog=false;
       }
