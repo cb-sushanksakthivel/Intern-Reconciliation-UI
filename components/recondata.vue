@@ -29,7 +29,7 @@
         <card
           icon="mdi-account"
           :title=cardcbdomain
-          sub-title="Chargebee Domain"
+          sub-title="Merchant"
           color="orange">
         </card>
       </v-flex>
@@ -40,7 +40,7 @@
         <card
           icon="mdi-cash-multiple"
           :title=cardtotalamount
-          sub-title="Total amount obtained"
+          sub-title="Net Total"
           color="brown">
         </card>
       </v-flex>
@@ -48,7 +48,7 @@
         <card
           icon="mdi-cash-multiple"
           :title=cardtotalgatewayfee
-          sub-title="Total Gateway consumed fee"
+          sub-title="Total Gateway Fee"
           color="blue">
         </card>
       </v-flex>
@@ -56,7 +56,7 @@
         <card
           icon="mdi-cash-multiple"
           :title=cardtotalcustomerpaid
-          sub-title="Total amount Customer paid"
+          sub-title="Total Amount"
           color="teal">
         </card>
       </v-flex>
@@ -64,7 +64,7 @@
         <card
           icon="mdi-cash-multiple"
           :title=cardfreqcurrency
-          sub-title="Most used Currency Code"
+          sub-title="Frequent Currency"
           color="cyan">
         </card>
       </v-flex>
